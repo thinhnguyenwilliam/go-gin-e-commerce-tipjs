@@ -6,6 +6,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/thinhcompany/ecommerce-ver-2/internal/service"
+	"github.com/thinhcompany/ecommerce-ver-2/pkg/response"
 )
 
 // Define the controller struct
@@ -16,6 +17,13 @@ type UserController struct {
 // Constructor function to create a new UserController
 func NewUserController(userService *service.UserService) *UserController {
 	return &UserController{userService: userService}
+}
+
+func (uc *UserController) GetUserByID(c *gin.Context) {
+	c.JSON(http.StatusOK, response.SuccessResponse(gin.H{"user": "William"}))
+
+	// or in case of error
+	//c.JSON(http.StatusBadRequest, response.ErrorResponse(response.ErrorCodeParamInvalid, nil))
 }
 
 func (uc *UserController) GetUserInfoHandler(c *gin.Context) {

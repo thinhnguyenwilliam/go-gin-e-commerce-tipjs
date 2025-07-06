@@ -23,6 +23,7 @@ func SetupRoutes(r *gin.Engine) {
 		v1.POST("/hello", HelloHandler)
 		v1.GET("/hello/:name", userController.HelloByNameHandler)
 		v1.GET("/users", userController.GetUserInfoHandler)
+		v1.GET("/user/:id", userController.GetUserByID)
 	}
 }
 
