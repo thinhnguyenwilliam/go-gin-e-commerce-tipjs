@@ -1,11 +1,34 @@
-docs
-.env
-*.log
+# Go build artifacts
+/bin/
+/dist/
+/tmp/
+/*.log
 *.tmp
 *.swp
+
+# Go vendor (if not using Go modules)
+vendor/
+
+# Dependency directories
+Gopkg.lock
+Gopkg.toml
+
+# IDE/editor settings
 .idea/
 .vscode/
-bin/
-dist/
-tmp/
+
+# dotenv environment files
+.env
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Air (live reload) temporary files
+.air
+
+# Ignore generated docs or user guides
+docs/
+
+# Ignore config for production (keep local/dev)
 config/production.yaml
