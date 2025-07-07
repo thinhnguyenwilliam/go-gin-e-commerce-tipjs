@@ -1,0 +1,12 @@
+server:
+  port: 8080
+
+databases:
+  user: root
+  password: 1234
+  host: localhost
+  dbname: shopdev_go
+
+security:
+  jwt:
+    key: abc123
