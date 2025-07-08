@@ -5,6 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	c "github.com/thinhcompany/ecommerce-ver-2/internal/controller"
+	"github.com/thinhcompany/ecommerce-ver-2/internal/middlewares"
 	"github.com/thinhcompany/ecommerce-ver-2/internal/repo"
 	"github.com/thinhcompany/ecommerce-ver-2/internal/service"
 )
@@ -16,14 +17,23 @@ func SetupRoutes(r *gin.Engine) {
 	userController := c.NewUserController(userService)
 	pongController := c.NewPongController() // if your PongController has no dependencies
 
+	// Global middleware: Rate limiting
+	r.Use(middlewares.RateLimitMiddleware())
+
 	// Group routes under /v1/2024
-	v1 := r.Group("/v1/2024")
+	// Public routes
+	public := r.Group("/v1/2024")
 	{
-		v1.GET("/ping", pongController.PingHandler)
-		v1.POST("/hello", HelloHandler)
-		v1.GET("/hello/:name", userController.HelloByNameHandler)
-		v1.GET("/users", userController.GetUserInfoHandler)
-		v1.GET("/user/:id", userController.GetUserByID)
+		public.GET("/ping", pongController.PingHandler)
+		public.POST("/hello", HelloHandler)
+	}
+
+	// Protected routes
+	protected := r.Group("/v1/2024", middlewares.AuthenMiddleware())
+	{
+		protected.GET("/hello/:name", userController.HelloByNameHandler)
+		protected.GET("/users", userController.GetUserInfoHandler)
+		protected.GET("/user/:id", userController.GetUserByID)
 	}
 }
 
