@@ -1,12 +1,30 @@
 server:
   port: 8080
+  mode: "dev"
 
-databases:
+mysql:
+  host: localhost
+  port: 3306
   user: root
   password: 1234
-  host: localhost
-  dbname: shopdev_go
+  dbname: go_eco
+  maxIdleConns: 10
+  maxOpenConns: 100
+  connexMaxLifetime: 3600
 
-security:
-  jwt:
-    key: abc123
+jwt:
+  secret: supersecretkey
+
+log:
+  logLevel: "debug"
+  fileLogName: "./storage/logs/dev.001.log"
+  maxSize: 10         # in megabytes
+  maxBackups: 5
+  maxAge: 28          # days
+  compress: true
+
+redis:
+  host: 127.0.0.1
+  port: 6388
+  password: ""
+  db: 0
