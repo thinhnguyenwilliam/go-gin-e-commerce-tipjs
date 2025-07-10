@@ -3,6 +3,16 @@ package setting
 type Config struct {
 	Server ServerSetting `mapstructure:"server"`
 	MySQL  MySQLSetting  `mapstructure:"mysql"`
+	Logger LoggerSetting `mapstructure:"log" yaml:"log"`
+}
+
+type LoggerSetting struct {
+	LogLevel    string `mapstructure:"logLevel" yaml:"logLevel"`
+	FileLogName string `mapstructure:"fileLogName" yaml:"fileLogName"`
+	MaxSize     int    `mapstructure:"maxSize" yaml:"maxSize"`
+	MaxBackups  int    `mapstructure:"maxBackups" yaml:"maxBackups"`
+	MaxAge      int    `mapstructure:"maxAge" yaml:"maxAge"`
+	Compress    bool   `mapstructure:"compress" yaml:"compress"`
 }
 
 type ServerSetting struct {

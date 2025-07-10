@@ -17,7 +17,7 @@ jwt:
 
 log:
   logLevel: "debug"
-  fileLogName: "./storage/logs/dev.001.log"
+  fileLogName: "./storages/logs/dev.001.log"
   maxSize: 10         # in megabytes
   maxBackups: 5
   maxAge: 28          # days
