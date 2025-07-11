@@ -12,9 +12,7 @@ func Run() {
 	defer global.AppLogger.Sync() // flush logs on exit
 	global.AppLogger.Info("Config log ok!!", zap.String("ok", "success"))
 
-	// if err := InitMysql(); err != nil {
-	// 	global.AppLogger.Fatal("Failed to initialize MySQL", zap.Error(err))
-	// }
+	InitMysql()
 
 	// if err := InitRedis(); err != nil {
 	// 	global.AppLogger.Fatal("Failed to initialize Redis", zap.Error(err))

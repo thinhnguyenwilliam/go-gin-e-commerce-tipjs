@@ -1,1 +1,3 @@
 {"level":"INFO","timestamp":"2025-07-10T07:42:44.373+0700","caller":"initialize/run.go:13","msg":"Config log ok!!","ok":"success"}
+{"level":"INFO","timestamp":"2025-07-11T07:51:32.219+0700","caller":"initialize/run.go:13","msg":"Config log ok!!","ok":"success"}
+{"level":"INFO","timestamp":"2025-07-11T07:51:32.240+0700","caller":"initialize/mysql.go:39","msg":"Init MySQL success","host":"localhost","port":3306,"user":"root","db":"go_eco","maxIdleConns":10,"maxOpenConns":100,"connMaxLifetime(sec)":3600}

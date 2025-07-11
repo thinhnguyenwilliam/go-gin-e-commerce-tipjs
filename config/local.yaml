@@ -3,11 +3,11 @@ server:
   mode: "dev"
 
 mysql:
-  host: localhost
+  host: "localhost"
   port: 3306
-  user: root
-  password: 1234
-  dbname: go_eco
+  user: "root"
+  password: "1234"
+  dbname: "go_eco"
   maxIdleConns: 10
   maxOpenConns: 100
   connexMaxLifetime: 3600

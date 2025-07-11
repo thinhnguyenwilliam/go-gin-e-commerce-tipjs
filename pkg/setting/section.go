@@ -6,6 +6,17 @@ type Config struct {
 	Logger LoggerSetting `mapstructure:"log" yaml:"log"`
 }
 
+type MySQLSetting struct {
+	Host            string `mapstructure:"host"`
+	Port            int    `mapstructure:"port"`
+	User            string `mapstructure:"user"`
+	Password        string `mapstructure:"password"`
+	DBName          string `mapstructure:"dbname"`
+	MaxIdleConns    int    `mapstructure:"maxIdleConns"`
+	MaxOpenConns    int    `mapstructure:"maxOpenConns"`
+	ConnMaxLifetime int    `mapstructure:"connexMaxLifetime"`
+}
+
 type LoggerSetting struct {
 	LogLevel    string `mapstructure:"logLevel" yaml:"logLevel"`
 	FileLogName string `mapstructure:"fileLogName" yaml:"fileLogName"`
@@ -18,15 +29,4 @@ type LoggerSetting struct {
 type ServerSetting struct {
 	Port int    `mapstructure:"port"`
 	Mode string `mapstructure:"mode"`
-}
-
-type MySQLSetting struct {
-	Host            string `mapstructure:"host"`
-	Port            int    `mapstructure:"port"`
-	User            string `mapstructure:"user"`
-	Password        string `mapstructure:"password"`
-	DBName          string `mapstructure:"dbname"`
-	MaxIdleConns    int    `mapstructure:"maxIdleConns"`
-	MaxOpenConns    int    `mapstructure:"maxOpenConns"`
-	ConnMaxLifetime int    `mapstructure:"connexMaxLifetime"`
 }
