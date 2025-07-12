@@ -14,9 +14,7 @@ func Run() {
 
 	InitMysql()
 
-	// if err := InitRedis(); err != nil {
-	// 	global.AppLogger.Fatal("Failed to initialize Redis", zap.Error(err))
-	// }
+	InitRedis()
 
 	r := InitRouter()
 

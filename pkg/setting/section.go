@@ -4,6 +4,14 @@ type Config struct {
 	Server ServerSetting `mapstructure:"server"`
 	MySQL  MySQLSetting  `mapstructure:"mysql"`
 	Logger LoggerSetting `mapstructure:"log" yaml:"log"`
+	Redis  RedisSetting  `mapstructure:"redis" yaml:"redis"`
+}
+
+type RedisSetting struct {
+	Addr     string `mapstructure:"addr" yaml:"addr"`
+	Password string `mapstructure:"password" yaml:"password"`
+	DB       int    `mapstructure:"db" yaml:"db"`
+	PoolSize int    `mapstructure:"poolsize" yaml:"poolsize"`
 }
 
 type MySQLSetting struct {

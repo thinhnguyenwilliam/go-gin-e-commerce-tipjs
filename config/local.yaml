@@ -24,7 +24,8 @@ log:
   compress: true
 
 redis:
-  host: 127.0.0.1
-  port: 6388
-  password: ""
+  addr: "localhost:6379"
+  password: ""        # leave empty if no auth
   db: 0
+  poolsize: 10
+

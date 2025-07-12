@@ -18,6 +18,9 @@ func InitRouter() *gin.Engine {
 	userController := c.NewUserController(userService)
 	pongController := c.NewPongController() // if your PongController has no dependencies
 
+	// Global rate limiter: 100 requests per minute- use redis
+	//r.Use(middlewares.RateLimiterMiddleware(100, time.Minute))
+
 	// Group routes under /v1/2024
 	public := r.Group("/v1/2024")
 	{
