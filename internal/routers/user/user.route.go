@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/thinhcompany/ecommerce-ver-2/internal/wire"
 )
 
 type UserRouter struct{}
@@ -12,10 +13,11 @@ type UserRouter struct{}
 func (ur *UserRouter) InitUserRouter(router *gin.RouterGroup) {
 	userRouterPublic := router.Group("/user")
 
+	// Inject with Wire
+	userHandler := wire.InitUserHandler()
+
 	// Public endpoints
-	userRouterPublic.GET("/register", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{"message": "register endpoint"})
-	})
+	userRouterPublic.GET("/register", userHandler.Register)
 
 	userRouterPublic.POST("/otp", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{"message": "otp endpoint"})
