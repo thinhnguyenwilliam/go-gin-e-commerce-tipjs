@@ -5,9 +5,10 @@ import (
 	"time"
 
 	"github.com/thinhcompany/ecommerce-ver-2/global"
-	model "github.com/thinhcompany/ecommerce-ver-2/internal/models"
+	"github.com/thinhcompany/ecommerce-ver-2/internal/model"
 	"go.uber.org/zap"
 	"gorm.io/driver/mysql"
+	"gorm.io/gen"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
 )
@@ -49,8 +50,29 @@ func InitMysql() error {
 
 	SetPool()
 	migratalbes()
+	genTableDAO(db)
 
 	return nil
+}
+
+// ✅ Fix: Accept existing DB connection
+func genTableDAO(db *gorm.DB) {
+	g := gen.NewGenerator(gen.Config{
+		OutPath: "./internal/model", // Generated files
+		//ModelPkgPath: "github.com/thinhcompany/ecommerce-ver-2/internal/model",
+		Mode: gen.WithDefaultQuery | gen.WithQueryInterface,
+	})
+
+	g.UseDB(db)
+
+	// Generate specific table(s)
+	//g.GenerateModel("go_crm_user", gen.FieldRename("usr_phone", "UserPhoneNumber"))
+	g.GenerateModel("go_crm_user")
+
+	// Or generate all:
+	// g.GenerateAllTable()
+
+	g.Execute()
 }
 
 func SetPool() {
@@ -68,9 +90,7 @@ func SetPool() {
 
 func migratalbes() {
 	err := global.Mdb.AutoMigrate(
-		&model.User{}, // replace with your actual models
-		&model.Product{},
-		&model.Role{},
+		&model.GoCrmUserV2{}, // replace with your actual models
 	)
 	if err != nil {
 		global.AppLogger.Fatal("Failed to auto-migrate tables", zap.Error(err))
