@@ -2,6 +2,13 @@ server:
   port: 8080
   mode: "dev"  # "dev", "prod"
 
+smtp:
+  host: "smtp.gmail.com"
+  port: 587
+  username: "thinhproee@gmail.com"
+  password: "rmakdncnfplgdrfr"
+
+
 mysql:
   host: "localhost"
   port: 3306
@@ -11,6 +18,13 @@ mysql:
   maxIdleConns: 10
   maxOpenConns: 100
   connexMaxLifetime: 3600
+
+redis:
+  addr: "localhost:6379"
+  password: ""        # leave empty if no auth
+  db: 0
+  poolsize: 10
+
 
 jwt:
   secret: supersecretkey
@@ -22,10 +36,3 @@ log:
   maxBackups: 5
   maxAge: 28          # days
   compress: true
-
-redis:
-  addr: "localhost:6379"
-  password: ""        # leave empty if no auth
-  db: 0
-  poolsize: 10
-

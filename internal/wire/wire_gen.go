@@ -16,7 +16,8 @@ import (
 
 func InitUserHandler() *handler.UserHandler {
 	iUserRepo := repo.NewUserRepo()
-	iUserService := service.NewUserService(iUserRepo)
+	iUserAuthRepository := repo.NewUserAuthRepository()
+	iUserService := service.NewUserService(iUserRepo, iUserAuthRepository)
 	userHandler := handler.NewUserHandler(iUserService)
 	return userHandler
 }

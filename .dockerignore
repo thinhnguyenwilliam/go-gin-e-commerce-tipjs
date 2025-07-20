@@ -1,0 +1,34 @@
+# Ignore the Git repository
+.git
+.gitignore
+
+# Ignore Docker-related files (except Dockerfile and docker-compose.yml)
+.dockerignore
+docker-compose.override.yml
+
+# Ignore Go build artifacts
+*.out
+*.exe
+*.test
+*.mod
+*.sum
+*.log
+
+# Ignore editor configs and OS files
+*.swp
+*.swo
+*.bak
+*.tmp
+*.DS_Store
+*.idea/
+*.vscode/
+
+# Ignore local env files
+.env
+.env.*
+
+# Ignore node_modules if frontend exists
+node_modules/
+
+# Ignore init data if it's not needed in container
+init/

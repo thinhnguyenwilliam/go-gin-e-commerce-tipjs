@@ -8,7 +8,6 @@ import (
 	"github.com/thinhcompany/ecommerce-ver-2/internal/model"
 	"go.uber.org/zap"
 	"gorm.io/driver/mysql"
-	"gorm.io/gen"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
 )
@@ -50,30 +49,30 @@ func InitMysql() error {
 
 	SetPool()
 	migratalbes()
-	genTableDAO(db)
+	//genTableDAO(db)
 
 	return nil
 }
 
 // ✅ Fix: Accept existing DB connection
-func genTableDAO(db *gorm.DB) {
-	g := gen.NewGenerator(gen.Config{
-		OutPath: "./internal/model", // Generated files
-		//ModelPkgPath: "github.com/thinhcompany/ecommerce-ver-2/internal/model",
-		Mode: gen.WithDefaultQuery | gen.WithQueryInterface,
-	})
+// func genTableDAO(db *gorm.DB) {
+// 	g := gen.NewGenerator(gen.Config{
+// 		OutPath: "./internal/model", // Generated files
+// 		//ModelPkgPath: "github.com/thinhcompany/ecommerce-ver-2/internal/model",
+// 		Mode: gen.WithDefaultQuery | gen.WithQueryInterface,
+// 	})
 
-	g.UseDB(db)
+// 	g.UseDB(db)
 
-	// Generate specific table(s)
-	//g.GenerateModel("go_crm_user", gen.FieldRename("usr_phone", "UserPhoneNumber"))
-	g.GenerateModel("go_crm_user")
+// 	// Generate specific table(s)
+// 	//g.GenerateModel("go_crm_user", gen.FieldRename("usr_phone", "UserPhoneNumber"))
+// 	g.GenerateModel("go_crm_user")
 
-	// Or generate all:
-	// g.GenerateAllTable()
+// 	// Or generate all:
+// 	// g.GenerateAllTable()
 
-	g.Execute()
-}
+// 	g.Execute()
+// }
 
 func SetPool() {
 	sqlDB, err := global.Mdb.DB()

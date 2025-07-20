@@ -33,5 +33,42 @@ services:
       - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka:29092
       - KAFKA_CLUSTERS_0_ZOOKEEPER=  # Leave empty (KRaft mode)
 
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root1234
+      MYSQL_DATABASE: shopdb
+      MYSQL_USER: shopuser
+      MYSQL_PASSWORD: shop1234
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./init/:/docker-entrypoint-initdb.d  # ✅ Runs SQL files on startup
+    # networks:
+    #   - backend
+    healthcheck:  # ✅ Fixed indentation
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  redis:
+    image: redis:7.2
+    container_name: redis
+    ports:
+      - "6380:6379"
+    volumes:
+      - redis_data:/data
+    # networks:
+    #   - backend
+
 # volumes:
-#   kafka_data:
+#   mysql_data:
+#   redis_data:
+  # kafka_data:  # Uncomment if you want persistent Kafka storage
+
+# networks:
+#   backend:

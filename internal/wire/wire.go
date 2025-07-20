@@ -12,6 +12,7 @@ import (
 
 func InitUserHandler() *handler.UserHandler {
 	wire.Build(
+		repo.NewUserAuthRepository,
 		repo.NewUserRepo,
 		service.NewUserService,
 		handler.NewUserHandler,

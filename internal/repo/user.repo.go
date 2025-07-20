@@ -1,5 +1,12 @@
 package repo
 
+import (
+	"log"
+
+	"github.com/thinhcompany/ecommerce-ver-2/global"
+	"github.com/thinhcompany/ecommerce-ver-2/internal/model"
+)
+
 type IUserRepo interface {
 	GetUserByEmail(email string) bool
 }
@@ -11,28 +18,9 @@ func NewUserRepo() IUserRepo {
 	return &userRepo{}
 }
 
-// Dummy implementation — replace with actual DB query
 func (r *userRepo) GetUserByEmail(email string) bool {
-	// TODO: query database here
-	return false
+	var user model.GoCrmUser
+	result := global.Mdb.Table(TableNameGoCrmUser).Where("usr_email = ?", email).First(&user)
+	log.Printf("Checked email %s - Exists: %v", email, result.RowsAffected != NumberNil)
+	return result.RowsAffected != NumberNil
 }
-
-// type User struct {
-// 	Name  string `json:"name"`
-// 	Email string `json:"email"`
-// 	Age   int    `json:"age"`
-// }
-
-// type UserRepo struct{}
-
-// func NewUserRepo() *UserRepo {
-// 	return &UserRepo{}
-// }
-
-// func (ur *UserRepo) GetInfoUserRepo() User {
-// 	return User{
-// 		Name:  "Mr William Handsome",
-// 		Email: "william@example.com",
-// 		Age:   30,
-// 	}
-// }

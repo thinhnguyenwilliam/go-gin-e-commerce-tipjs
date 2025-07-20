@@ -1,10 +1,14 @@
 package handler
 
 import (
+	"encoding/json"
+	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 	"github.com/thinhcompany/ecommerce-ver-2/internal/service"
+	"github.com/thinhcompany/ecommerce-ver-2/internal/vo"
+	"github.com/thinhcompany/ecommerce-ver-2/pkg/response"
 )
 
 type UserHandler struct {
@@ -20,46 +24,22 @@ func NewUserHandler(userService service.IUserService) *UserHandler {
 
 // Register user
 func (h *UserHandler) Register(c *gin.Context) {
-	email := c.Query("email")
-	purpose := c.Query("purpose")
+	var req vo.UserRegisterRequest
+	if err := c.ShouldBindJSON(&req); err != nil {
+		// c.JSON(http.StatusBadRequest, gin.H{
+		// 	"error": err.Error(),
+		// })
+		c.JSON(http.StatusBadRequest, response.ErrorResponse(response.ErrorCodeParamInvalid, nil))
+		return
+	}
 
-	result := h.userService.Register(email, purpose)
+	// Log the request body
+	log.Printf("Received registration request: email=%s, purpose=%s", req.Email, req.Purpose)
 
-	// You can choose to use custom HTTP code here if needed
-	c.JSON(http.StatusOK, result)
+	jsonData, _ := json.Marshal(req)
+	log.Println("Request body:", string(jsonData))
+
+	result := h.userService.Register(req.Email, req.Purpose)
+
+	c.JSON(http.StatusOK, response.SuccessResponse(result))
 }
-
-// Define the controller struct
-// type UserController struct {
-// 	userService *service.UserService
-// }
-
-// // Constructor function to create a new UserController
-// func NewUserController(userService *service.UserService) *UserController {
-// 	return &UserController{userService: userService}
-// }
-
-// func (uc *UserController) GetUserByID(c *gin.Context) {
-// 	c.JSON(http.StatusOK, response.SuccessResponse(gin.H{"user": "William"}))
-
-// 	// or in case of error
-// 	//c.JSON(http.StatusBadRequest, response.ErrorResponse(response.ErrorCodeParamInvalid, nil))
-// }
-
-// func (uc *UserController) GetUserInfoHandler(c *gin.Context) {
-// 	uc.userService.GetInfoUserService(c)
-// }
-
-// // Handler method on the UserController struct
-// func (uc *UserController) HelloByNameHandler(c *gin.Context) {
-// 	name := c.Param("name")              // e.g. /hello/thinh
-// 	uid := c.DefaultQuery("uid", "0000") // ?uid=123 or default "0000"
-
-// 	log.Println("Name:", name, "UID:", uid)
-
-// 	c.JSON(http.StatusOK, gin.H{
-// 		"message": "Hello " + name,
-// 		"uid":     uid,
-// 		"users":   []string{"cr7", "m10", "thinh"},
-// 	})
-// }

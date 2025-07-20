@@ -5,6 +5,9 @@ const (
 	ErrorCodeParamInvalid  = 20002 // email invalid
 	ErrorCodeTokenInvalid  = 30001
 	ErrorCodeUserHasExists = 50001
+	ErrorCodeOtpStillValid = 50002
+	ErrorCodeRedisError    = 50003
+	ErrorCodeEmailSend     = 50004
 )
 
 // Error messages corresponding to each code
@@ -13,6 +16,9 @@ var Msg = map[int]string{
 	ErrorCodeParamInvalid:  "Email is invalid",
 	ErrorCodeTokenInvalid:  "Invalid Token Bro",
 	ErrorCodeUserHasExists: "User has already register",
+	ErrorCodeOtpStillValid: "OTP already sent and still valid",
+	ErrorCodeRedisError:    "Redis error occurred",
+	ErrorCodeEmailSend:     "Email send fail bro",
 }
 
 func GetMsg(code int) string {

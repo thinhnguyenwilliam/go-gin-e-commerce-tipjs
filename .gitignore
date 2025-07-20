@@ -32,3 +32,4 @@ docs/
 
 # Ignore config for production (keep local/dev)
 config/production.yaml
+tmp

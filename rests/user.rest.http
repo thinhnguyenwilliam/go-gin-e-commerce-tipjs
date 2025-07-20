@@ -1,0 +1,15 @@
+@baseUrl = http://localhost:8080/v1/2024
+
+### ✅ Check server status
+GET {{baseUrl}}/check-status
+
+###
+
+### ✅ Register user
+POST {{baseUrl}}/user/register
+Content-Type: application/json
+
+{
+  "email": "hoangproee@gmail.com",
+  "purpose": "REGISTER"
+}
