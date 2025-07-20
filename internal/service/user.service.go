@@ -1,9 +1,12 @@
 package service
 
 import (
+	"context"
+	"fmt"
 	"log"
 	"time"
 
+	"github.com/thinhcompany/ecommerce-ver-2/global"
 	"github.com/thinhcompany/ecommerce-ver-2/internal/repo"
 	"github.com/thinhcompany/ecommerce-ver-2/pkg/response"
 	"github.com/thinhcompany/ecommerce-ver-2/pkg/utils/crypto"
@@ -37,20 +40,23 @@ func (s *userService) Register(email string, purpose string) int {
 	log.Println("Email has been hash:", hashedEmail)
 
 	// 1. Check if OTP is still valid in Redis
-	// otpKey := fmt.Sprintf("otp:%s:%s", purpose, hashedEmail)
-	// exists, err := global.Rdb.Exists(context.Background(), otpKey).Result()
-	// if err != nil {
-	// 	log.Printf("Redis EXISTS error: %v", err)
-	// 	return response.ErrorCodeRedisError // define this constant
-	// }
-	// if exists > 0 {
-	// 	return response.ErrorCodeOtpStillValid // define this constant
-	// }
+	//c623eeaccf18df2ba50d855a138ede0a19c6844d48cdd263152cff6f78c2c36e
+	otpKey := fmt.Sprintf("usr:%s:otp", hashedEmail)
+	exists, errOtpKey := global.Rdb.Exists(context.Background(), otpKey).Result()
+	if errOtpKey != nil {
+		log.Printf("Redis EXISTS error: %v", errOtpKey)
+		return response.ErrorCodeRedisError // define this constant
+	}
+	if exists > 0 {
+		log.Println("OTP still valid. Skipping re-send.")
+		return response.ErrorCodeOtpStillValid // define this constant
+	}
 
 	// 2. Optional: add rate limiting logic if needed
 
 	// 3. Check if user already exists
 	if s.userRepo.GetUserByEmail(email) {
+		log.Printf("User already exists: %s", email)
 		return response.ErrorCodeUserHasExists
 	}
 
@@ -83,6 +89,6 @@ func (s *userService) Register(email string, purpose string) int {
 		log.Println("Failed to send email:", err)
 		return response.ErrorCodeEmailSend
 	}
-
+	log.Println("OTP sent successfully to:", email)
 	return response.ErrorCodeSuccess
 }
