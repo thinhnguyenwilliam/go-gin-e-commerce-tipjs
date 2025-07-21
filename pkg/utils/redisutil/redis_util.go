@@ -2,10 +2,20 @@ package redisutil
 
 import (
 	"context"
+	"fmt"
 	"time"
 
 	"github.com/thinhcompany/ecommerce-ver-2/global"
 )
+
+func IsOtpStillValid(hashedEmail, purpose string) (bool, error) {
+	otpKey := fmt.Sprintf("usr:%s:otp", hashedEmail)
+	exists, err := global.Rdb.Exists(context.Background(), otpKey).Result()
+	if err != nil {
+		return false, err
+	}
+	return exists > 0, nil
+}
 
 // SetKey sets a key with a value and TTL
 func SetKey(ctx context.Context, key string, value string, ttl time.Duration) error {

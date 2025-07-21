@@ -1,16 +1,14 @@
 package service
 
 import (
-	"context"
-	"fmt"
 	"log"
 	"time"
 
-	"github.com/thinhcompany/ecommerce-ver-2/global"
 	"github.com/thinhcompany/ecommerce-ver-2/internal/repo"
 	"github.com/thinhcompany/ecommerce-ver-2/pkg/response"
 	"github.com/thinhcompany/ecommerce-ver-2/pkg/utils/crypto"
 	"github.com/thinhcompany/ecommerce-ver-2/pkg/utils/random"
+	"github.com/thinhcompany/ecommerce-ver-2/pkg/utils/redisutil"
 	sendto "github.com/thinhcompany/ecommerce-ver-2/pkg/utils/send_to"
 )
 
@@ -41,15 +39,14 @@ func (s *userService) Register(email string, purpose string) int {
 
 	// 1. Check if OTP is still valid in Redis
 	//c623eeaccf18df2ba50d855a138ede0a19c6844d48cdd263152cff6f78c2c36e
-	otpKey := fmt.Sprintf("usr:%s:otp", hashedEmail)
-	exists, errOtpKey := global.Rdb.Exists(context.Background(), otpKey).Result()
-	if errOtpKey != nil {
-		log.Printf("Redis EXISTS error: %v", errOtpKey)
-		return response.ErrorCodeRedisError // define this constant
+	valid, errOTP := redisutil.IsOtpStillValid(hashedEmail, purpose)
+	if errOTP != nil {
+		log.Printf("Redis EXISTS error: %v", errOTP)
+		return response.ErrorCodeRedisError
 	}
-	if exists > 0 {
+	if valid {
 		log.Println("OTP still valid. Skipping re-send.")
-		return response.ErrorCodeOtpStillValid // define this constant
+		return response.ErrorCodeOtpStillValid
 	}
 
 	// 2. Optional: add rate limiting logic if needed
