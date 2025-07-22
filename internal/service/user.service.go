@@ -15,7 +15,7 @@ import (
 const otpExpiration = 5 * time.Minute // you can change this duration
 
 type IUserService interface {
-	Register(email string, purpose string) int
+	Register(email string, purpose string) response.ResponseData
 }
 
 type userService struct {
@@ -32,21 +32,21 @@ func NewUserService(
 	}
 }
 
-func (s *userService) Register(email string, purpose string) int {
+func (s *userService) Register(email string, purpose string) response.ResponseData {
 	// 0. Hash email
 	hashedEmail := crypto.HashSHA256(email)
 	log.Println("Email has been hash:", hashedEmail)
 
 	// 1. Check if OTP is still valid in Redis
 	//c623eeaccf18df2ba50d855a138ede0a19c6844d48cdd263152cff6f78c2c36e
-	valid, errOTP := redisutil.IsOtpStillValid(hashedEmail, purpose)
+	valid, errOTP := redisutil.IsOtpStillValid(hashedEmail)
 	if errOTP != nil {
 		log.Printf("Redis EXISTS error: %v", errOTP)
-		return response.ErrorCodeRedisError
+		return response.ErrorResponse(response.ErrorCodeRedisError, nil)
 	}
 	if valid {
 		log.Println("OTP still valid. Skipping re-send.")
-		return response.ErrorCodeOtpStillValid
+		return response.ErrorResponse(response.ErrorCodeOtpStillValid, nil)
 	}
 
 	// 2. Optional: add rate limiting logic if needed
@@ -54,7 +54,7 @@ func (s *userService) Register(email string, purpose string) int {
 	// 3. Check if user already exists
 	if s.userRepo.GetUserByEmail(email) {
 		log.Printf("User already exists: %s", email)
-		return response.ErrorCodeUserHasExists
+		return response.ErrorResponse(response.ErrorCodeUserHasExists, nil)
 	}
 
 	// 4. Generate OTP
@@ -69,7 +69,7 @@ func (s *userService) Register(email string, purpose string) int {
 	saveErr := s.userAuthRepo.AddOTP(hashedEmail, otp, otpExpiration)
 	if saveErr != nil {
 		log.Printf("Error saving OTP to Redis: %v", saveErr)
-		return response.ErrorCodeRedisError
+		return response.ErrorResponse(response.ErrorCodeRedisError, nil)
 	}
 
 	// 6. TODO: Send OTP to email or SMS (not implemented yet)
@@ -84,8 +84,11 @@ func (s *userService) Register(email string, purpose string) int {
 	)
 	if err != nil {
 		log.Println("Failed to send email:", err)
-		return response.ErrorCodeEmailSend
+		return response.ErrorResponse(response.ErrorCodeEmailSend, nil)
 	}
 	log.Println("OTP sent successfully to:", email)
-	return response.ErrorCodeSuccess
+	return response.SuccessResponse(map[string]string{
+		"email": email,
+		"otp":   otp, // ⚠️ only return for testing; remove in production
+	})
 }

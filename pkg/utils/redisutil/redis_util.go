@@ -8,8 +8,12 @@ import (
 	"github.com/thinhcompany/ecommerce-ver-2/global"
 )
 
-func IsOtpStillValid(hashedEmail, purpose string) (bool, error) {
-	otpKey := fmt.Sprintf("usr:%s:otp", hashedEmail)
+func BuildOtpKey(hashedEmail string) string {
+	return fmt.Sprintf("usr:%s:otp", hashedEmail)
+}
+
+func IsOtpStillValid(hashedEmail string) (bool, error) {
+	otpKey := BuildOtpKey(hashedEmail)
 	exists, err := global.Rdb.Exists(context.Background(), otpKey).Result()
 	if err != nil {
 		return false, err

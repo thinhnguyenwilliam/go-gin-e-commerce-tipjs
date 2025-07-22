@@ -15,10 +15,29 @@
 APP_NAME := ecommerce-ver-2
 MAIN_FILE := main.go
 CMD_DIR := ./cmd/server
+DB_DRIVER = mysql
+DB_DSN = root:1234@tcp(localhost:3306)/go_eco
+MIGRATIONS_DIR = ./db/schema
+GOOSE := goose
+SQLC := sqlc
 
 # Default target
-.PHONY: all
+.PHONY: all migrate-up migrate-down reset
 all: build
+
+# 🧬 SQLC Code Generation
+sqlc:
+	$(SQLC) generate
+
+# 🗃 Goose Migration Commands
+migrate-up:
+	$(GOOSE) -dir $(MIGRATIONS_DIR) $(DB_DRIVER) "$(DB_DSN)" up
+
+migrate-down:
+	$(GOOSE) -dir $(MIGRATIONS_DIR) $(DB_DRIVER) "$(DB_DSN)" down
+
+reset:
+	$(GOOSE) -dir $(MIGRATIONS_DIR) $(DB_DRIVER) "$(DB_DSN)" reset
 
 # Build the app
 .PHONY: build

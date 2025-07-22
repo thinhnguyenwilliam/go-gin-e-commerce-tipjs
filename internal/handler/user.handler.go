@@ -39,7 +39,6 @@ func (h *UserHandler) Register(c *gin.Context) {
 	jsonData, _ := json.Marshal(req)
 	log.Println("Request body:", string(jsonData))
 
-	result := h.userService.Register(req.Email, req.Purpose)
-
-	c.JSON(http.StatusOK, response.SuccessResponse(result))
+	resp := h.userService.Register(req.Email, req.Purpose)
+	c.JSON(http.StatusOK, resp)
 }

@@ -1,0 +1,9 @@
+version: "2"
+sql:
+  - engine: "mysql"
+    schema: "db/schema/"       # ✅ SQLC-compatible .sql files (no goose tags)
+    queries: "db/queries/"
+    gen:
+      go:
+        package: "db"
+        out: "internal/db"
