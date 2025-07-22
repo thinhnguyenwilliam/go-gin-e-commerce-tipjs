@@ -18,6 +18,7 @@ func (ur *UserRouter) InitUserRouter(router *gin.RouterGroup) {
 
 	// Public endpoints
 	userRouterPublic.POST("/register", userHandler.Register)
+	userRouterPublic.GET("/check-email", userHandler.CheckEmail)
 
 	userRouterPublic.POST("/otp", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{"message": "otp endpoint"})

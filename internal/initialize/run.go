@@ -12,7 +12,8 @@ func Run() {
 	defer global.AppLogger.Sync() // flush logs on exit
 	global.AppLogger.Info("Config log ok!!", zap.String("ok", "success"))
 
-	InitMysql()
+	//InitMysql()
+	InitMysqlC()
 
 	InitRedis()
 

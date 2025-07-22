@@ -8,6 +8,7 @@ const (
 	ErrorCodeOtpStillValid = 50002
 	ErrorCodeRedisError    = 50003
 	ErrorCodeEmailSend     = 50004
+	ErrorCodeNotFound      = 50005
 )
 
 // Error messages corresponding to each code
@@ -19,6 +20,7 @@ var Msg = map[int]string{
 	ErrorCodeOtpStillValid: "OTP already sent and still valid",
 	ErrorCodeRedisError:    "Redis error occurred",
 	ErrorCodeEmailSend:     "Email send fail bro",
+	ErrorCodeNotFound:      "Email can't find",
 }
 
 func GetMsg(code int) string {

@@ -16,6 +16,7 @@ const otpExpiration = 5 * time.Minute // you can change this duration
 
 type IUserService interface {
 	Register(email string, purpose string) response.ResponseData
+	CheckUserExists(email string) response.ResponseData
 }
 
 type userService struct {
@@ -30,6 +31,15 @@ func NewUserService(
 		userRepo:     userRepo,
 		userAuthRepo: userAuthRepo,
 	}
+}
+
+func (s *userService) CheckUserExists(email string) response.ResponseData {
+	exists := s.userRepo.GetUserByEmail(email)
+	if exists {
+		log.Printf("User already exists: %s", email)
+		return response.SuccessResponse("User exists")
+	}
+	return response.ErrorResponse(response.ErrorCodeNotFound, nil)
 }
 
 func (s *userService) Register(email string, purpose string) response.ResponseData {

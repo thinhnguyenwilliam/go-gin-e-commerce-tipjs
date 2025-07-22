@@ -22,6 +22,17 @@ func NewUserHandler(userService service.IUserService) *UserHandler {
 	}
 }
 
+// GET /user/check-email?email=hoang@gmail.com
+func (h *UserHandler) CheckEmail(c *gin.Context) {
+	email := c.Query("email")
+	if email == "" {
+		c.JSON(http.StatusBadRequest, response.ErrorResponse(response.ErrorCodeParamInvalid, nil))
+		return
+	}
+	resp := h.userService.CheckUserExists(email)
+	c.JSON(http.StatusOK, resp)
+}
+
 // Register user
 func (h *UserHandler) Register(c *gin.Context) {
 	var req vo.UserRegisterRequest
