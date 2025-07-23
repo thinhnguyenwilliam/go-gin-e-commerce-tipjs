@@ -82,3 +82,9 @@
 {"level":"INFO","timestamp":"2025-07-22T13:14:15.085+0700","caller":"initialize/run.go:13","msg":"Config log ok!!","ok":"success"}
 {"level":"INFO","timestamp":"2025-07-22T13:14:15.086+0700","caller":"initialize/mysqlc.go:39","msg":"Init MySQL success","host":"localhost","port":3306,"user":"root","db":"go_eco","maxIdleConns":10,"maxOpenConns":100,"connMaxLifetime(sec)":3600}
 {"level":"INFO","timestamp":"2025-07-22T13:14:15.103+0700","caller":"initialize/redis.go:30","msg":"Connected to Redis","addr":"localhost:6379","db":0}
+{"level":"INFO","timestamp":"2025-07-23T06:53:27.772+0700","caller":"initialize/run.go:13","msg":"Config log ok!!","ok":"success"}
+{"level":"INFO","timestamp":"2025-07-23T06:53:27.775+0700","caller":"initialize/mysqlc.go:39","msg":"Init MySQL success","host":"localhost","port":3306,"user":"root","db":"go_eco","maxIdleConns":10,"maxOpenConns":100,"connMaxLifetime(sec)":3600}
+{"level":"INFO","timestamp":"2025-07-23T06:53:27.811+0700","caller":"initialize/redis.go:30","msg":"Connected to Redis","addr":"localhost:6379","db":0}
+{"level":"INFO","timestamp":"2025-07-23T07:01:41.501+0700","caller":"initialize/run.go:13","msg":"Config log ok!!","ok":"success"}
+{"level":"INFO","timestamp":"2025-07-23T07:01:41.502+0700","caller":"initialize/mysqlc.go:39","msg":"Init MySQL success","host":"localhost","port":3306,"user":"root","db":"go_eco","maxIdleConns":10,"maxOpenConns":100,"connMaxLifetime(sec)":3600}
+{"level":"INFO","timestamp":"2025-07-23T07:01:41.518+0700","caller":"initialize/redis.go:30","msg":"Connected to Redis","addr":"localhost:6379","db":0}

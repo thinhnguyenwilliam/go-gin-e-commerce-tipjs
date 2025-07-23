@@ -9,8 +9,8 @@ POST {{baseUrl}}/user/register
 Content-Type: application/json
 
 {
-  "email": "hoangproee@gmail.com",
-  "purpose": "REGISTER"
+  "email": "tipjava@gmail.com",
+  "purpose": "Test"
 }
 
 

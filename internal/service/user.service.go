@@ -83,19 +83,28 @@ func (s *userService) Register(email string, purpose string) response.ResponseDa
 	}
 
 	// 6. TODO: Send OTP to email or SMS (not implemented yet)
-	err := sendto.SendTemplateOtp(
-		[]string{email},
-		"thinhproee@gmail.com",
-		"otp.html",
-		map[string]any{
-			"OTP":  otp,
-			"Year": time.Now().Year(),
-		},
-	)
+	// err := sendto.SendTemplateOtp(
+	// 	[]string{email},
+	// 	"thinhproee@gmail.com",
+	// 	"otp.html",
+	// 	map[string]any{
+	// 		"OTP":  otp,
+	// 		"Year": time.Now().Year(),
+	// 	},
+	// )
+	// if err != nil {
+	// 	log.Println("Failed to send email:", err)
+	// 	return response.ErrorResponse(response.ErrorCodeEmailSend, nil)
+	// }
+
+	// 6. TODO: Send OTP via Java API
+	log.Printf("Sending OTP '%s' to '%s' via Java API", otp, email)
+	err := sendto.SendEmailToJavaApi(otp, email, "otp.html")
 	if err != nil {
-		log.Println("Failed to send email:", err)
+		log.Printf("Failed to send email via Java API: %v\n", err)
 		return response.ErrorResponse(response.ErrorCodeEmailSend, nil)
 	}
+
 	log.Println("OTP sent successfully to:", email)
 	return response.SuccessResponse(map[string]string{
 		"email": email,
