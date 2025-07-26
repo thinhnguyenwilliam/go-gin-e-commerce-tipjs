@@ -17,9 +17,13 @@ func Run() {
 
 	InitRedis()
 
+	InitKafka()
+	defer CloseKafka()
+
 	r := InitRouter()
 
-	if err := r.Run(":8080"); err != nil {
+	port := ":8081"
+	if err := r.Run(port); err != nil {
 		global.AppLogger.Fatal("Server failed to start", zap.Error(err))
 	}
 }

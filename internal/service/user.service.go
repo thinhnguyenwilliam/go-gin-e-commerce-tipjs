@@ -1,15 +1,18 @@
 package service
 
 import (
+	"context"
+	"encoding/json"
 	"log"
 	"time"
 
+	"github.com/segmentio/kafka-go"
+	"github.com/thinhcompany/ecommerce-ver-2/global"
 	"github.com/thinhcompany/ecommerce-ver-2/internal/repo"
 	"github.com/thinhcompany/ecommerce-ver-2/pkg/response"
 	"github.com/thinhcompany/ecommerce-ver-2/pkg/utils/crypto"
 	"github.com/thinhcompany/ecommerce-ver-2/pkg/utils/random"
 	"github.com/thinhcompany/ecommerce-ver-2/pkg/utils/redisutil"
-	sendto "github.com/thinhcompany/ecommerce-ver-2/pkg/utils/send_to"
 )
 
 const otpExpiration = 5 * time.Minute // you can change this duration
@@ -98,10 +101,39 @@ func (s *userService) Register(email string, purpose string) response.ResponseDa
 	// }
 
 	// 6. TODO: Send OTP via Java API
-	log.Printf("Sending OTP '%s' to '%s' via Java API", otp, email)
-	err := sendto.SendEmailToJavaApi(otp, email, "otp.html")
+	// log.Printf("Sending OTP '%s' to '%s' via Java API", otp, email)
+	// err := sendto.SendEmailToJavaApi(otp, email, "otp.html")
+	// if err != nil {
+	// 	log.Printf("Failed to send email via Java API: %v\n", err)
+	// 	return response.ErrorResponse(response.ErrorCodeEmailSend, nil)
+	// }
+
+	// 6. TODO: Send OTP via Kafka
+	log.Printf("Sending OTP '%s' to '%s' via Kafka", otp, email)
+
+	// Build message body
+	body := map[string]any{
+		"otp":     otp,
+		"email":   email,
+		"purpose": purpose,
+		"time":    time.Now().Format(time.RFC3339),
+	}
+
+	bodyRequest, err := json.Marshal(body)
 	if err != nil {
-		log.Printf("Failed to send email via Java API: %v\n", err)
+		log.Printf("Failed to marshal Kafka message body: %v", err)
+		return response.ErrorResponse(response.ErrorCodeInternal, nil)
+	}
+
+	message := kafka.Message{
+		Key:   []byte("otp-auth"),
+		Value: bodyRequest,
+		Time:  time.Now(),
+	}
+
+	err = global.KafkaProducer.WriteMessages(context.Background(), message)
+	if err != nil {
+		log.Printf("Kafka write error: %v", err)
 		return response.ErrorResponse(response.ErrorCodeEmailSend, nil)
 	}
 

@@ -88,3 +88,13 @@
 {"level":"INFO","timestamp":"2025-07-23T07:01:41.501+0700","caller":"initialize/run.go:13","msg":"Config log ok!!","ok":"success"}
 {"level":"INFO","timestamp":"2025-07-23T07:01:41.502+0700","caller":"initialize/mysqlc.go:39","msg":"Init MySQL success","host":"localhost","port":3306,"user":"root","db":"go_eco","maxIdleConns":10,"maxOpenConns":100,"connMaxLifetime(sec)":3600}
 {"level":"INFO","timestamp":"2025-07-23T07:01:41.518+0700","caller":"initialize/redis.go:30","msg":"Connected to Redis","addr":"localhost:6379","db":0}
+{"level":"INFO","timestamp":"2025-07-26T10:48:26.362+0700","caller":"initialize/run.go:13","msg":"Config log ok!!","ok":"success"}
+{"level":"INFO","timestamp":"2025-07-26T10:48:26.364+0700","caller":"initialize/mysqlc.go:39","msg":"Init MySQL success","host":"localhost","port":3306,"user":"root","db":"go_eco","maxIdleConns":10,"maxOpenConns":100,"connMaxLifetime(sec)":3600}
+{"level":"INFO","timestamp":"2025-07-26T10:48:26.405+0700","caller":"initialize/redis.go:30","msg":"Connected to Redis","addr":"localhost:6379","db":0}
+{"level":"FATAL","timestamp":"2025-07-26T10:48:26.411+0700","caller":"initialize/run.go:23","msg":"Server failed to start","error":"listen tcp :8080: bind: Only one usage of each socket address (protocol/network address/port) is normally permitted."}
+{"level":"INFO","timestamp":"2025-07-26T10:48:35.040+0700","caller":"initialize/run.go:13","msg":"Config log ok!!","ok":"success"}
+{"level":"INFO","timestamp":"2025-07-26T10:48:35.041+0700","caller":"initialize/mysqlc.go:39","msg":"Init MySQL success","host":"localhost","port":3306,"user":"root","db":"go_eco","maxIdleConns":10,"maxOpenConns":100,"connMaxLifetime(sec)":3600}
+{"level":"INFO","timestamp":"2025-07-26T10:48:35.063+0700","caller":"initialize/redis.go:30","msg":"Connected to Redis","addr":"localhost:6379","db":0}
+{"level":"INFO","timestamp":"2025-07-26T16:03:19.653+0700","caller":"initialize/run.go:13","msg":"Config log ok!!","ok":"success"}
+{"level":"INFO","timestamp":"2025-07-26T16:03:19.655+0700","caller":"initialize/mysqlc.go:39","msg":"Init MySQL success","host":"localhost","port":3306,"user":"root","db":"go_eco","maxIdleConns":10,"maxOpenConns":100,"connMaxLifetime(sec)":3600}
+{"level":"INFO","timestamp":"2025-07-26T16:03:19.698+0700","caller":"initialize/redis.go:30","msg":"Connected to Redis","addr":"localhost:6379","db":0}

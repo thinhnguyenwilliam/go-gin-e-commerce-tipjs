@@ -44,9 +44,9 @@ services:
       MYSQL_PASSWORD: shop1234
     ports:
       - "3307:3306"
-    volumes:
-      - mysql_data:/var/lib/mysql
-      - ./init/:/docker-entrypoint-initdb.d  # ✅ Runs SQL files on startup
+    # volumes:
+    #   - mysql_data:/var/lib/mysql
+    #   - ./init/:/docker-entrypoint-initdb.d  # ✅ Runs SQL files on startup
     # networks:
     #   - backend
     healthcheck:  # ✅ Fixed indentation
@@ -60,8 +60,8 @@ services:
     container_name: redis
     ports:
       - "6380:6379"
-    volumes:
-      - redis_data:/data
+    # volumes:
+    #   - redis_data:/data
     # networks:
     #   - backend
 

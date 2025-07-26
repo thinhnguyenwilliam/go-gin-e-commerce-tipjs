@@ -9,6 +9,7 @@ const (
 	ErrorCodeRedisError    = 50003
 	ErrorCodeEmailSend     = 50004
 	ErrorCodeNotFound      = 50005
+	ErrorCodeInternal      = 50006
 )
 
 // Error messages corresponding to each code
@@ -21,6 +22,7 @@ var Msg = map[int]string{
 	ErrorCodeRedisError:    "Redis error occurred",
 	ErrorCodeEmailSend:     "Email send fail bro",
 	ErrorCodeNotFound:      "Email can't find",
+	ErrorCodeInternal:      "Can't marsall",
 }
 
 func GetMsg(code int) string {

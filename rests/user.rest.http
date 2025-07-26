@@ -1,4 +1,4 @@
-@baseUrl = http://localhost:8080/v1/2024
+@baseUrl = http://localhost:8081/v1/2024
 
 ### ✅ Check server status
 GET {{baseUrl}}/check-status
@@ -9,7 +9,7 @@ POST {{baseUrl}}/user/register
 Content-Type: application/json
 
 {
-  "email": "tipjava@gmail.com",
+  "email": "tipjava002@gmail.com",
   "purpose": "Test"
 }
 
