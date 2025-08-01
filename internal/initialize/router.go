@@ -1,6 +1,9 @@
 package initialize
 
 import (
+	"time"
+
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/thinhcompany/ecommerce-ver-2/global"
 	"github.com/thinhcompany/ecommerce-ver-2/internal/routers"
@@ -8,6 +11,20 @@ import (
 
 func InitRouter() *gin.Engine {
 	var r *gin.Engine
+
+	// CORS config
+	r.Use(cors.New(cors.Config{
+		AllowOrigins: []string{
+			"http://localhost:3000",
+			"http://127.0.0.1:3000",
+			"https://frontend.yourdomain.com",
+		},
+		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+		MaxAge:           12 * time.Hour,
+	}))
 
 	if global.ConfigGlobal.Server.Mode == "dev" {
 		gin.SetMode(gin.DebugMode)
