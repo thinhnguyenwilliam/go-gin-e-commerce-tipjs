@@ -1,3 +1,4 @@
+// internal\initialize\run.go
 package initialize
 
 import (
@@ -14,6 +15,8 @@ func Run() {
 
 	//InitMysql()
 	InitMysqlC()
+
+	InitServiceInterface()
 
 	InitRedis()
 

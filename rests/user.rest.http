@@ -1,5 +1,14 @@
 @baseUrl = http://localhost:8081/v1/2024
 
+### ✅ Login user
+POST {{baseUrl}}/user/login
+Content-Type: application/json
+
+{
+  "email": "tipjava003@gmail.com",
+  "purpose": "Test"
+}
+
 ### ✅ Check server status
 GET {{baseUrl}}/check-status
 

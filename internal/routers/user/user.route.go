@@ -1,9 +1,11 @@
+// internal\routers\user\user.route.go
 package user
 
 import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/thinhcompany/ecommerce-ver-2/internal/handler/account"
 	"github.com/thinhcompany/ecommerce-ver-2/internal/wire"
 )
 
@@ -19,6 +21,7 @@ func (ur *UserRouter) InitUserRouter(router *gin.RouterGroup) {
 	// Public endpoints
 	userRouterPublic.POST("/register", userHandler.Register)
 	userRouterPublic.GET("/check-email", userHandler.CheckEmail)
+	userRouterPublic.POST("/login", account.Login.Login)
 
 	userRouterPublic.POST("/otp", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{"message": "otp endpoint"})

@@ -1,3 +1,4 @@
+// internal\initialize\router.go
 package initialize
 
 import (
@@ -12,6 +13,17 @@ import (
 func InitRouter() *gin.Engine {
 	var r *gin.Engine
 
+	if global.ConfigGlobal.Server.Mode == "dev" {
+		gin.SetMode(gin.DebugMode)
+		gin.ForceConsoleColor()
+		r = gin.Default()
+	} else {
+		gin.SetMode(gin.ReleaseMode)
+		r = gin.New()
+		// Optionally add your own middleware
+		r.Use(gin.Recovery())
+	}
+
 	// CORS config
 	r.Use(cors.New(cors.Config{
 		AllowOrigins: []string{
@@ -25,17 +37,6 @@ func InitRouter() *gin.Engine {
 		AllowCredentials: true,
 		MaxAge:           12 * time.Hour,
 	}))
-
-	if global.ConfigGlobal.Server.Mode == "dev" {
-		gin.SetMode(gin.DebugMode)
-		gin.ForceConsoleColor()
-		r = gin.Default()
-	} else {
-		gin.SetMode(gin.ReleaseMode)
-		r = gin.New()
-		// Optionally add your own middleware
-		r.Use(gin.Recovery())
-	}
 
 	managerRouter := routers.RouterGroupApp.Manager
 	userRouter := routers.RouterGroupApp.User
