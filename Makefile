@@ -6,11 +6,12 @@
 # make clean	Remove built files
 # make test	Run unit tests
 # make fmt	Format code
-#make dev	Run with hot-reload via Air
+# make dev	Run with hot-reload via Air
+# make create-migration name=00001_pre_go_acc_user_verify_9999
+# chạy đúng 1 migration kế tiếp thay vì up tất cả: make migrate-up-one
+# Chạy tất cả migration còn lại: make migrate-up
+
 ##
-
-
-
 # Project Variables
 APP_NAME := ecommerce-ver-2
 MAIN_FILE := main.go
@@ -30,6 +31,12 @@ sqlc:
 	$(SQLC) generate
 
 # 🗃 Goose Migration Commands
+create-migration:
+	$(GOOSE) -dir $(MIGRATIONS_DIR) create $(name) sql
+
+migrate-up-one:
+	$(GOOSE) -dir $(MIGRATIONS_DIR) $(DB_DRIVER) "$(DB_DSN)" up-by-one
+
 migrate-up:
 	$(GOOSE) -dir $(MIGRATIONS_DIR) $(DB_DRIVER) "$(DB_DSN)" up
 

@@ -1,8 +1,8 @@
 version: "2"
 sql:
   - engine: "mysql"
-    schema: "db/schema/"       # ✅ SQLC-compatible .sql files (no goose tags)
-    queries: "db/queries/"
+    schema: "db/schema/"        # nơi có goose migration (chỉ chứa CREATE TABLE)
+    queries: "db/queries/"      # nơi có query (phải chứa file .sql riêng)
     gen:
       go:
         package: "db"
